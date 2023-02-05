@@ -8,18 +8,16 @@ import javax.inject.Inject
 
 class RestaurantsRepositoryImpl @Inject constructor(private val api: JustEatApi) :
     RestaurantsRepository {
-
     override suspend fun getRestaurantsByPostcode(postCode: String): Result<List<Restaurant>> {
         return try {
             val response = api.getRestaurantsByPostcode(postCode.filter { !it.isWhitespace() })
             if (response.isSuccessful && response.body()?.Restaurants != null) {
                 Result.success(response.body()!!.toRestaurantList())
             } else {
-                Result.failure(Exception("Here is my exception!!"))
+                Result.failure(Throwable())
             }
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
-
 }

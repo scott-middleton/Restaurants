@@ -50,7 +50,7 @@ fun RestaurantSearchScreen(
     }
 
     RestaurantsSearchContent(state = state, onSearch = { postcode ->
-        viewModel.onSearch(postcode)
+        viewModel.searchByPostcode(postcode)
     })
 }
 

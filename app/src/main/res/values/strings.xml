@@ -2,5 +2,6 @@
     <string name="app_name">Restaurants</string>
     <string name="search_by_postcode">Search by postcode</string>
     <string name="clear_postcode_content_description">Clear postcode input</string>
-    <string name="search_screen_description">Enter your postcode to see the open restaurants in your area.</string>
+    <string name="search_screen_description">Enter a valid postcode to see the open restaurants in the area.</string>
+    <string name="search_error_message">Something went wrong. Check your postcode input and internet connection, then try again.</string>
 </resources>
