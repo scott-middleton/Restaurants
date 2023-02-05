@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -89,7 +90,7 @@ fun RestaurantsSearchContent(state: RestaurantsState, onSearch: (String) -> Unit
 @Composable
 fun SearchView(onSearch: (String) -> Unit) {
     val focusManager = LocalFocusManager.current
-    var inputValue by remember { mutableStateOf("") }
+    var inputValue by rememberSaveable { mutableStateOf("") }
 
     TextField(
         modifier = Modifier
@@ -101,7 +102,7 @@ fun SearchView(onSearch: (String) -> Unit) {
         placeholder = {
             Text(
                 text = stringResource(R.string.search_by_postcode),
-                color = Color.White
+                style = MaterialTheme.typography.h4,
             )
         },
         textStyle = MaterialTheme.typography.h4,
@@ -135,11 +136,6 @@ fun SearchView(onSearch: (String) -> Unit) {
         singleLine = true,
         shape = RectangleShape,
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.White,
-            cursorColor = Color.White,
-            leadingIconColor = Color.White,
-            trailingIconColor = Color.White,
-            backgroundColor = MaterialTheme.colors.primary,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
@@ -235,7 +231,7 @@ fun LoadingScreen() {
             Modifier
                 .size(48.dp)
                 .align(Alignment.Center),
-            color = Color.Black
+            color = MaterialTheme.colors.onBackground
         )
     }
 }
