@@ -2,7 +2,8 @@
 
 I spent about 4/5 hours on the test. 
 
-* Increase the test coverage
+* Increase the test coverage. The coverage here is simply to provide an example of testing approaches rather
+than being deemed as sufficient coverage for a released application.
 * DetectOutcode UseCase could be written in a way that makes it more testable in general. 
 * Compose UI tests would be needed.
 
@@ -11,11 +12,13 @@ the same SnackBar and these could provide more context. Taking into account the 
 allow for more relevant errors presented to the user.
 
 * Provide some client side validation on the postcode input. i.e ensure all
-inputs are alphanumeric and of a maximum length - perhaps a postcode format regex should be used.
+inputs are alphanumeric and of a maximum length. Perhaps a postcode format regex should be used.
 
 * General improvements could be made with more advanced features such as filters for
-restaurants based on cuisine type etc and potentially a pagination system to load more restaurants as
+restaurants based on name, cuisine type etc and potentially a pagination system to load more restaurants as
 the user scrolls.
+
+* Consider requesting ACCESS_FINE_LOCATION permission should the coarse location be deemed to provide insufficient accuracy upon thorough testing.
 
 ## What was the most useful feature that was added to the latest version of your chosen language? Please include a snippet of code that shows how you've used it.
 
@@ -84,15 +87,15 @@ CPU/Memory usage data.
 of the issue.
 
 In this specific application it would seem likely that performance issues could by a by-product of 
-parsing, mapping and rendering the restaurants list returned from the api, which could a large set of results.
-This specific case could be mitigated in some of the suggestions made in the API improvements questions below.
+parsing, mapping and rendering the restaurants list returned from the api, which could contain a large set of results.
+This specific case could be mitigated in some of the suggestions made in the API improvements question below.
 
 ## How would you improve the Just Eat APIs that you just used?
 
 * Add support for pagination to allow for more efficient retrieval of the large amounts of data.
 
 * Add support for filtering based on different criteria to allow for more specific and relevant
-results. Specifically in filtering by restaurants that are currently open.
+results. Specifically, filtering by restaurants that are currently open.
 
 * Provide a light endpoint that only contains the fields relevant to the list items displayed in this
 feature.
