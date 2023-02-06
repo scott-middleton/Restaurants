@@ -1,6 +1,6 @@
 ## How long did you spend on the coding test? What would you add to your solution if you had more time? If you didn't spend much time on the coding test then use this as an opportunity to explain what you would add.
 
-I spent approximately 4 to 5 hours on the coding test. If I had more time, I would focus on the following areas for improvement:
+I spent approximately 5 hours on the coding test. If I had more time, I would focus on the following areas for improvement:
 
 * Increase test coverage. The current test coverage only provides an example of testing approaches and is not considered sufficient for a released application.
 * Refactor the DetectOutcode UseCase to make it more testable. I was somewhat stretched for time and with more time I would like to fully test
@@ -76,8 +76,9 @@ CPU/Memory usage data.
 * Test the performance in different scenarios and on different devices to get a better understanding
 of the issue.
 
-In this specific application it would seem likely that performance issues could by a by-product of 
-parsing, mapping and rendering the restaurants list returned from the api, which could contain a large set of results.
+Although I do not have vast experience addressing performance issues in production, in this specific application 
+it would seem likely that performance issues could be a result of parsing, mapping and rendering the restaurants list returned from the api, 
+which could contain a large set of results.
 This specific case could be mitigated in some of the suggestions made in the API improvements question below.
 
 ## How would you improve the Just Eat APIs that you just used?
