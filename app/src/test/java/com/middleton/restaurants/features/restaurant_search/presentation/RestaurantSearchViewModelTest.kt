@@ -4,7 +4,9 @@ import app.cash.turbine.test
 import com.middleton.restaurants.R
 import com.middleton.restaurants.features.restaurant_search.data.repository.FakeRestaurantsRepository
 import com.middleton.restaurants.features.restaurant_search.domain.usecases.GetOpenRestaurants
+import com.middleton.restaurants.features.restaurant_search.domain.usecases.DetectOutCode
 import com.middleton.restaurants.util.UiText
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
@@ -19,6 +21,7 @@ import org.junit.Test
 class RestaurantSearchViewModelTest {
     private var repository = FakeRestaurantsRepository()
     private lateinit var getOpenRestaurants: GetOpenRestaurants
+    private lateinit var detectOutCode: DetectOutCode
 
     private lateinit var sut: RestaurantSearchViewModel
 
@@ -35,7 +38,9 @@ class RestaurantSearchViewModelTest {
     @Before
     fun setUp() {
         getOpenRestaurants = GetOpenRestaurants(repository)
-        sut = RestaurantSearchViewModel(getOpenRestaurants)
+        detectOutCode = mockk()
+
+        sut = RestaurantSearchViewModel(getOpenRestaurants, detectOutCode)
     }
 
     @Test
@@ -43,18 +48,18 @@ class RestaurantSearchViewModelTest {
         runTest {
             repository.shouldReturnError = true
 
-            sut.searchByPostcode("CF143NN")
+            sut.emitAction(RestaurantSearchAction.OnSearchByPostcode("CF143NN"))
 
-            val expectedState = RestaurantsState(restaurants = emptyList(), isLoading = false)
+            val expectedState = RestaurantSearchState(restaurants = emptyList(), isLoading = false)
 
             sut.state.test {
                 val item = awaitItem()
                 assertEquals(expectedState, item)
             }
 
-            sut.snackBarEvent.test {
+            sut.restaurantSearchEvent.test {
                 assertEquals(
-                    RestaurantsSnackBarEvent(
+                    RestaurantSearchEvent.ShowSnackBarEvent(
                         UiText.StringResource(R.string.search_error_message)
                     ),
                     awaitItem()
@@ -67,10 +72,10 @@ class RestaurantSearchViewModelTest {
         runTest {
             repository.shouldReturnError = false
 
-            sut.searchByPostcode("CF143NN")
+            sut.emitAction(RestaurantSearchAction.OnSearchByPostcode("CF143NN"))
 
             val expectedState =
-                RestaurantsState(
+                RestaurantSearchState(
                     restaurants = getOpenRestaurants.invoke("CF143NN").getOrThrow(),
                     isLoading = false
                 )
@@ -86,9 +91,9 @@ class RestaurantSearchViewModelTest {
         runTest {
             repository.shouldReturnError = false
 
-            sut.searchByPostcode("")
+            sut.emitAction(RestaurantSearchAction.OnSearchByPostcode(""))
 
-            val expectedState = RestaurantsState(restaurants = emptyList())
+            val expectedState = RestaurantSearchState(restaurants = emptyList())
 
             sut.state.test {
                 val item = awaitItem()

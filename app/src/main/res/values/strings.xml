@@ -4,4 +4,10 @@
     <string name="clear_postcode_content_description">Clear postcode input</string>
     <string name="search_screen_description">Enter a valid postcode to see the open restaurants in the area.</string>
     <string name="search_error_message">Something went wrong. Check your postcode input and internet connection, then try again.</string>
+    <string name="auto_detect_outcode">Auto-detect outcode</string>
+    <string name="auto_detect_outcode_permission">Allow permissions to auto-detect outcode</string>
+    <string name="auto_detect_outcode_failure">Failed to detect the outcode of you location</string>
+    <string name="permission_denied_message">Location permissions must be allowed to use this feature, these can be enabled in your app settings.</string>
+    <string name="permission_rationale_message">Location permissions are required to use this feature, please allow them to continue.</string>
+    <string name="permission_rationale_action_label">Allow</string>
 </resources>
