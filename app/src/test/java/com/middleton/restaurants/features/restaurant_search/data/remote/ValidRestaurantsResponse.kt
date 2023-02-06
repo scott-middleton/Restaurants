@@ -1,3 +1,5 @@
+package com.middleton.restaurants.features.restaurant_search.data.remote
+
 val validRestaurantsResponse = """{
     "Area":"Caernarfon",
     "MetaData":{

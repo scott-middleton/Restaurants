@@ -50,7 +50,6 @@ fun RestaurantSearchScreen(
             permissionState.launchPermissionRequest()
         }
 
-
         viewModel.restaurantSearchEvents.collect { event ->
             when (event) {
                 is RestaurantSearchEvent.ShowPermissionRationale -> {
@@ -85,7 +84,7 @@ fun RestaurantSearchScreen(
         onSearchValueChange = { searchValue ->
             viewModel.emitAction(RestaurantSearchAction.OnSearchValueUpdated(searchValue))
         },
-        onAutoDetect = { viewModel.emitAction(RestaurantSearchAction.OnAutoDetectPostcode(context)) },
+        onAutoDetect = { viewModel.emitAction(RestaurantSearchAction.OnAutoDetectPostcode) },
         onShowRationale = { viewModel.emitAction(RestaurantSearchAction.OnShowPermissionRationale) },
         onPermissionDenied = { viewModel.emitAction(RestaurantSearchAction.OnPermissionsDenied) })
 }

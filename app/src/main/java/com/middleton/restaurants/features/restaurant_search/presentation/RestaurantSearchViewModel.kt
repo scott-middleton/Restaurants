@@ -1,12 +1,11 @@
 package com.middleton.restaurants.features.restaurant_search.presentation
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.middleton.restaurants.R
 import com.middleton.restaurants.features.restaurant_search.domain.model.Restaurant
-import com.middleton.restaurants.features.restaurant_search.domain.usecases.GetOpenRestaurants
 import com.middleton.restaurants.features.restaurant_search.domain.usecases.DetectOutCode
+import com.middleton.restaurants.features.restaurant_search.domain.usecases.GetOpenRestaurants
 import com.middleton.restaurants.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +48,7 @@ class RestaurantSearchViewModel @Inject constructor(
 
     private fun handleAction(action: RestaurantSearchAction) {
         when (action) {
-            is RestaurantSearchAction.OnAutoDetectPostcode -> {
+            RestaurantSearchAction.OnAutoDetectPostcode -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     detectOutCode(onSuccess = { outCode ->
                         searchRestaurants(outCode)
@@ -57,7 +56,7 @@ class RestaurantSearchViewModel @Inject constructor(
                     }, onFailure = {
                         RestaurantSearchEvent.ShowSnackBarEvent(
                             UiText.StringResource(
-                                R.string.search_error_message
+                                R.string.auto_detect_outcode_failure
                             )
                         )
                     })
@@ -126,7 +125,7 @@ data class RestaurantSearchState(
 )
 
 sealed class RestaurantSearchAction {
-    data class OnAutoDetectPostcode(val context: Context) : RestaurantSearchAction()
+    object OnAutoDetectPostcode : RestaurantSearchAction()
     object OnShowPermissionRationale : RestaurantSearchAction()
     object OnPermissionsDenied : RestaurantSearchAction()
 

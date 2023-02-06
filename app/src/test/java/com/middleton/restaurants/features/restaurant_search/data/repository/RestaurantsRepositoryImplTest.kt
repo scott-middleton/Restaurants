@@ -14,7 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import validRestaurantsResponse
+import com.middleton.restaurants.features.restaurant_search.data.remote.validRestaurantsResponse
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalCoroutinesApi::class)
