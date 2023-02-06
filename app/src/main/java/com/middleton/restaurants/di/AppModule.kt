@@ -1,5 +1,7 @@
 package com.middleton.restaurants.di
 
+import android.app.Application
+import android.content.Context
 import com.middleton.restaurants.features.restaurant_search.data.remote.JustEatApi
 import com.middleton.restaurants.features.restaurant_search.data.repository.RestaurantsRepositoryImpl
 import com.middleton.restaurants.features.restaurant_search.domain.repository.RestaurantsRepository
@@ -41,5 +43,10 @@ object AppModule {
         return RestaurantsRepositoryImpl(
             api = api
         )
+    }
+
+    @Provides
+    fun provideContext(application: Application): Context {
+        return application
     }
 }
