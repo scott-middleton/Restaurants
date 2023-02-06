@@ -30,8 +30,8 @@ class RestaurantSearchViewModel @Inject constructor(
 
     private val uiActions = MutableSharedFlow<RestaurantSearchAction>()
 
-    private val _restaurantSearchEvent = Channel<RestaurantSearchEvent>()
-    val restaurantSearchEvent = _restaurantSearchEvent.receiveAsFlow()
+    private val _restaurantSearchEvents = Channel<RestaurantSearchEvent>()
+    val restaurantSearchEvents = _restaurantSearchEvents.receiveAsFlow()
 
     init {
         viewModelScope.launch {
@@ -51,7 +51,7 @@ class RestaurantSearchViewModel @Inject constructor(
         when (action) {
             is RestaurantSearchAction.OnAutoDetectPostcode -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    detectOutCode(action.context, onSuccess = { outCode ->
+                    detectOutCode(onSuccess = { outCode ->
                         searchRestaurants(outCode)
                         _state.value = state.value.copy(currentSearchValue = outCode)
                     }, onFailure = {
@@ -65,7 +65,7 @@ class RestaurantSearchViewModel @Inject constructor(
             }
             RestaurantSearchAction.OnPermissionsDenied -> {
                 viewModelScope.launch {
-                    _restaurantSearchEvent.send(
+                    _restaurantSearchEvents.send(
                         RestaurantSearchEvent.ShowSnackBarEvent(
                             UiText.StringResource(
                                 R.string.permission_denied_message
@@ -76,7 +76,7 @@ class RestaurantSearchViewModel @Inject constructor(
             }
             RestaurantSearchAction.OnShowPermissionRationale -> {
                 viewModelScope.launch {
-                    _restaurantSearchEvent.send(
+                    _restaurantSearchEvents.send(
                         RestaurantSearchEvent.ShowPermissionRationale(
                             UiText.StringResource(R.string.permission_rationale_message),
                             UiText.StringResource(R.string.permission_rationale_action_label)
@@ -105,7 +105,7 @@ class RestaurantSearchViewModel @Inject constructor(
                 }.onFailure {
                     _state.value =
                         _state.value.copy(restaurants = emptyList(), isLoading = false)
-                    _restaurantSearchEvent.send(
+                    _restaurantSearchEvents.send(
                         RestaurantSearchEvent.ShowSnackBarEvent(
                             UiText.StringResource(
                                 R.string.search_error_message

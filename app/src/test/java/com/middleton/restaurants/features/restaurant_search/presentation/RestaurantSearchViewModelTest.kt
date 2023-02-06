@@ -44,6 +44,46 @@ class RestaurantSearchViewModelTest {
     }
 
     @Test
+    fun `When OnPermissionsDenied action emitted, then snackBar event is emitted`() = runTest {
+        sut.emitAction(RestaurantSearchAction.OnPermissionsDenied)
+
+        sut.restaurantSearchEvents.test {
+            val item = awaitItem()
+            assertEquals(
+                RestaurantSearchEvent.ShowSnackBarEvent(
+                    UiText.StringResource(R.string.permission_denied_message)
+                ), item
+            )
+        }
+    }
+
+    @Test
+    fun `When OnSearchValueUpdated action emitted, then state is emitted with new value`() =
+        runTest {
+            sut.emitAction(RestaurantSearchAction.OnSearchValueUpdated("CF14"))
+
+            sut.state.test {
+                val item = awaitItem()
+                assertEquals(RestaurantSearchState(currentSearchValue = "CF14"), item)
+            }
+        }
+
+    @Test
+    fun `When OnShowPermissionRationale action emitted, then ShowPermissionRationale event is emitted`() = runTest {
+        sut.emitAction(RestaurantSearchAction.OnShowPermissionRationale)
+
+        sut.restaurantSearchEvents.test {
+            val item = awaitItem()
+            assertEquals(
+                RestaurantSearchEvent.ShowPermissionRationale(
+                    UiText.StringResource(R.string.permission_rationale_message),
+                    UiText.StringResource(R.string.permission_rationale_action_label)
+                ), item
+            )
+        }
+    }
+
+    @Test
     fun `Given repo returns error, when searchByPostcode, then state contains empty list and snackbar event emitted`() =
         runTest {
             repository.shouldReturnError = true
@@ -57,7 +97,7 @@ class RestaurantSearchViewModelTest {
                 assertEquals(expectedState, item)
             }
 
-            sut.restaurantSearchEvent.test {
+            sut.restaurantSearchEvents.test {
                 assertEquals(
                     RestaurantSearchEvent.ShowSnackBarEvent(
                         UiText.StringResource(R.string.search_error_message)

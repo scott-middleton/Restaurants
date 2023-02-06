@@ -7,10 +7,9 @@ import com.google.android.gms.location.LocationServices
 import java.util.*
 import javax.inject.Inject
 
-class DetectOutCode @Inject constructor() {
-
+class DetectOutCode @Inject constructor(private val context: Context) {
     @SuppressLint("MissingPermission")
-    operator fun invoke(context: Context, onSuccess: (String) -> Unit, onFailure: () -> Unit) {
+    operator fun invoke(onSuccess: (String) -> Unit, onFailure: () -> Unit) {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         var outCode = ""
 

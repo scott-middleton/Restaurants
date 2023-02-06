@@ -46,9 +46,12 @@ fun RestaurantSearchScreen(
     val permissionState = rememberPermissionState(Manifest.permission.ACCESS_COARSE_LOCATION)
 
     LaunchedEffect(Unit) {
-        permissionState.launchPermissionRequest()
+        if (!permissionState.status.isGranted && !permissionState.status.shouldShowRationale) {
+            permissionState.launchPermissionRequest()
+        }
 
-        viewModel.restaurantSearchEvent.collect { event ->
+
+        viewModel.restaurantSearchEvents.collect { event ->
             when (event) {
                 is RestaurantSearchEvent.ShowPermissionRationale -> {
                     val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
