@@ -9,6 +9,8 @@ import com.middleton.restaurants.util.UiText
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -47,14 +49,13 @@ class RestaurantSearchViewModelTest {
     fun `When OnPermissionsDenied action emitted, then snackBar event is emitted`() = runTest {
         sut.emitAction(RestaurantSearchAction.OnPermissionsDenied)
 
-        sut.restaurantSearchEvents.test {
-            val item = awaitItem()
-            assertEquals(
-                RestaurantSearchEvent.ShowSnackBarEvent(
-                    UiText.StringResource(R.string.permission_denied_message)
-                ), item
-            )
-        }
+        val actual = sut.restaurantSearchEvents.drop(1).first()
+
+        assertEquals(
+            RestaurantSearchEvent.ShowSnackBarEvent(
+                UiText.StringResource(R.string.permission_denied_message)
+            ), actual
+        )
     }
 
     @Test
@@ -69,19 +70,19 @@ class RestaurantSearchViewModelTest {
         }
 
     @Test
-    fun `When OnShowPermissionRationale action emitted, then ShowPermissionRationale event is emitted`() = runTest {
-        sut.emitAction(RestaurantSearchAction.OnShowPermissionRationale)
+    fun `When OnShowPermissionRationale action emitted, then ShowPermissionRationale event is emitted`() =
+        runTest {
+            sut.emitAction(RestaurantSearchAction.OnShowPermissionRationale)
 
-        sut.restaurantSearchEvents.test {
-            val item = awaitItem()
+            val actual = sut.restaurantSearchEvents.drop(1).first()
+
             assertEquals(
                 RestaurantSearchEvent.ShowPermissionRationale(
                     UiText.StringResource(R.string.permission_rationale_message),
                     UiText.StringResource(R.string.permission_rationale_action_label)
-                ), item
+                ), actual
             )
         }
-    }
 
     @Test
     fun `Given repo returns error, when searchByPostcode, then state contains empty list and snackbar event emitted`() =
@@ -97,14 +98,14 @@ class RestaurantSearchViewModelTest {
                 assertEquals(expectedState, item)
             }
 
-            sut.restaurantSearchEvents.test {
-                assertEquals(
-                    RestaurantSearchEvent.ShowSnackBarEvent(
-                        UiText.StringResource(R.string.search_error_message)
-                    ),
-                    awaitItem()
-                )
-            }
+            val actual = sut.restaurantSearchEvents.drop(1).first()
+
+            assertEquals(
+                RestaurantSearchEvent.ShowSnackBarEvent(
+                    UiText.StringResource(R.string.search_error_message)
+                ),
+                actual
+            )
         }
 
     @Test
