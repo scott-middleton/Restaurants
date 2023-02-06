@@ -15,20 +15,19 @@ class DetectOutCode @Inject constructor(private val context: Context) {
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
-                if (location != null) {
+                try {
                     val latitude = location.latitude
                     val longitude = location.longitude
 
                     val geocoder = Geocoder(context, Locale.getDefault())
                     val addresses = geocoder.getFromLocation(latitude, longitude, 1)
                     val postalCode = addresses?.get(0)?.postalCode ?: ""
-                    if (postalCode.isNotEmpty()) {
-                        outCode = postalCode.substring(0, postalCode.indexOf(" "))
-                    }
+                    outCode = postalCode.substring(0, postalCode.indexOf(" "))
                     onSuccess(outCode)
+                } catch (e: Exception) {
+                    onFailure()
                 }
-            }
-            .addOnFailureListener {
+            }.addOnFailureListener {
                 onFailure()
             }
     }

@@ -54,11 +54,15 @@ class RestaurantSearchViewModel @Inject constructor(
                         searchRestaurants(outCode)
                         _state.value = state.value.copy(currentSearchValue = outCode)
                     }, onFailure = {
-                        RestaurantSearchEvent.ShowSnackBarEvent(
-                            UiText.StringResource(
-                                R.string.auto_detect_outcode_failure
+                        viewModelScope.launch {
+                            _restaurantSearchEvents.send(
+                                RestaurantSearchEvent.ShowSnackBarEvent(
+                                    UiText.StringResource(
+                                        R.string.auto_detect_outcode_failure
+                                    )
+                                )
                             )
-                        )
+                        }
                     })
                 }
             }
@@ -128,9 +132,7 @@ sealed class RestaurantSearchAction {
     object OnAutoDetectPostcode : RestaurantSearchAction()
     object OnShowPermissionRationale : RestaurantSearchAction()
     object OnPermissionsDenied : RestaurantSearchAction()
-
     data class OnSearchByPostcode(val postcode: String) : RestaurantSearchAction()
-
     data class OnSearchValueUpdated(val value: String) : RestaurantSearchAction()
 }
 
