@@ -13,7 +13,8 @@ In general this app could also be improved with more advanced features such as f
 The example I can provide is not quite a cutting edge as Kotlin 1.8.0, but in versions beyond 1.6.0 non-exhaustive when statements became errors. I like using sealed classes and
 in combination with non-exhaustive when statements the potential for developer error is lessened
 
-'''private fun handleAction(action: RestaurantSearchAction) {
+```
+private fun handleAction(action: RestaurantSearchAction) {
 when (action) {
 is RestaurantSearchAction.OnAutoDetectPostcode -> {
 viewModelScope.launch(Dispatchers.IO) {
@@ -56,7 +57,8 @@ is RestaurantSearchAction.OnSearchValueUpdated -> {
 _state.value = state.value.copy(currentSearchValue = action.value)
 }
 }
-}'''
+}
+```
 
 Here any RestaurantSearchAction types added will be required to be implemented in the handleAction() function
 
