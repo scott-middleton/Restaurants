@@ -1,7 +1,5 @@
 ## Implementation
-The application follows an MVVM, clean architecture pattern and uses Hilt for dependency injection. Navigation and layouts are handled with Jetpack Compose.
-
-The restaurants are fetched from the Just Eat API using Retrofit.
+The application follows an MVVM, clean architecture pattern and uses Hilt for dependency injection. Navigation and layouts are handled with Jetpack Compose. The restaurants are fetched from the Just Eat API using Retrofit.
 
 ViewModels hold the state of the data and handle the logic of the user interface, while the view is responsible for displaying the data and handling user interactions. Communication between the view and the ViewModels is done through events and actions. 
 The ViewModels also have the ability to emit events that the view can listen for and respond to, allowing for a decoupled relationship between the two. This approach allows for a clear separation of concerns, making the code more maintainable and easier to test. 
