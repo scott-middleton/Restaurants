@@ -11,14 +11,13 @@ class DetectOutCode @Inject constructor(private val context: Context) {
     @SuppressLint("MissingPermission")
     operator fun invoke(onSuccess: (String) -> Unit, onFailure: () -> Unit) {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-        var outCode = ""
+        var outCode: String
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 try {
                     val latitude = location.latitude
                     val longitude = location.longitude
-
                     val geocoder = Geocoder(context, Locale.getDefault())
                     val addresses = geocoder.getFromLocation(latitude, longitude, 1)
                     val postalCode = addresses?.get(0)?.postalCode ?: ""

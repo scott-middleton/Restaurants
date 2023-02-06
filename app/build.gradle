@@ -71,10 +71,10 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_android_version"
 
     // Permissions
-    implementation "com.google.accompanist:accompanist-permissions:0.28.0"
+    implementation "com.google.accompanist:accompanist-permissions:$accompanist_permissions_version"
 
     // Location
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation "com.google.android.gms:play-services-location:$play_services_location_version"
 
     // Testing
     testImplementation "junit:junit:$junit_version"

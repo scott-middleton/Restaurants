@@ -46,10 +46,6 @@ fun RestaurantSearchScreen(
     val permissionState = rememberPermissionState(Manifest.permission.ACCESS_COARSE_LOCATION)
 
     LaunchedEffect(Unit) {
-        if (!permissionState.status.isGranted && !permissionState.status.shouldShowRationale) {
-            permissionState.launchPermissionRequest()
-        }
-
         viewModel.restaurantSearchEvents.collect { event ->
             when (event) {
                 is RestaurantSearchEvent.ShowPermissionRationale -> {
@@ -70,6 +66,11 @@ fun RestaurantSearchScreen(
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message.asString(context)
                     )
+                }
+                RestaurantSearchEvent.LaunchRequestPermissionsEvent -> {
+                    if (!permissionState.status.isGranted && !permissionState.status.shouldShowRationale) {
+                        permissionState.launchPermissionRequest()
+                    }
                 }
             }
         }
@@ -99,9 +100,8 @@ fun RestaurantsSearchContent(
     onShowRationale: () -> Unit,
     onPermissionDenied: () -> Unit
 ) {
-
-
     val spacing = LocalSpacing.current
+
     Column {
         SearchView(
             onSearch = onSearch,

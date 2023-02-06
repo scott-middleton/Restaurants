@@ -38,6 +38,10 @@ class RestaurantSearchViewModel @Inject constructor(
                 handleAction(it)
             }
         }
+
+        viewModelScope.launch {
+            _restaurantSearchEvents.send(RestaurantSearchEvent.LaunchRequestPermissionsEvent)
+        }
     }
 
     fun emitAction(action: RestaurantSearchAction) {
@@ -138,6 +142,7 @@ sealed class RestaurantSearchAction {
 
 sealed class RestaurantSearchEvent {
     data class ShowSnackBarEvent(val message: UiText) : RestaurantSearchEvent()
+    object LaunchRequestPermissionsEvent: RestaurantSearchEvent()
     data class ShowPermissionRationale(val message: UiText, val actionLabel: UiText) :
         RestaurantSearchEvent()
 }

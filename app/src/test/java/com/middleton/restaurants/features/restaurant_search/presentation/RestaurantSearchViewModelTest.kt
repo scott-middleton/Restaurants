@@ -3,8 +3,8 @@ package com.middleton.restaurants.features.restaurant_search.presentation
 import app.cash.turbine.test
 import com.middleton.restaurants.R
 import com.middleton.restaurants.features.restaurant_search.data.repository.FakeRestaurantsRepository
-import com.middleton.restaurants.features.restaurant_search.domain.usecases.GetOpenRestaurants
 import com.middleton.restaurants.features.restaurant_search.domain.usecases.DetectOutCode
+import com.middleton.restaurants.features.restaurant_search.domain.usecases.GetOpenRestaurants
 import com.middleton.restaurants.util.UiText
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
